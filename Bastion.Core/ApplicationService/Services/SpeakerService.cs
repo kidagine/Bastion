@@ -1,11 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using Bastion.Core.Entity;
 using Bastion.Core.DomainService;
 
 namespace Bastion.Core.ApplicationService.Services
 {
-    class SpeakerService : ISpeakerService
+    public class SpeakerService : ISpeakerService
     {
         private readonly ISpeakerRepository _speakerRepository;
 
@@ -23,16 +25,41 @@ namespace Bastion.Core.ApplicationService.Services
 
         public Speaker Create(Speaker speaker)
         {
+            if (speaker.Id != default)
+            {
+                throw new NotSupportedException($"The speaker id should not be specified");
+            }
+            else if (string.IsNullOrEmpty(speaker.Name))
+            {
+                throw new InvalidDataException("You need to specify the speaker's name");
+            }
+            else if (speaker.Price == default)
+            {
+                throw new InvalidDataException("You need to specify the speaker's price");
+            }
             return _speakerRepository.Create(speaker);
         }
 
         public Speaker Update(Speaker speaker)
         {
+            if (string.IsNullOrEmpty(speaker.Name))
+            {
+                throw new InvalidDataException("You need to specify the speaker's name");
+            }
+            else if (speaker.Price == default)
+            {
+                throw new InvalidDataException("You need to specify the speaker's price");
+            }
             return _speakerRepository.Update(speaker);
         }
 
         public Speaker Delete(int id)
         {
+            Speaker speaker = _speakerRepository.ReadById(id);
+            if (speaker == null)
+            {
+                throw new NullReferenceException($"The speaker with Id: {id} does not exist");
+            }
             return _speakerRepository.Delete(id);
         }
 
@@ -47,3 +74,4 @@ namespace Bastion.Core.ApplicationService.Services
         }
     }
 }
+

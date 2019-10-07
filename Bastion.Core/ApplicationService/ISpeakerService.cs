@@ -3,7 +3,7 @@ using Bastion.Core.Entity;
 
 namespace Bastion.Core.ApplicationService
 {
-    interface ISpeakerService
+    public interface ISpeakerService
     {
         Speaker New(string name, double price, ColorType color);
         Speaker Create(Speaker speaker);

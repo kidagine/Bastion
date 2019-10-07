@@ -1,16 +1,20 @@
-﻿using Bastion.Core.DomainService;
-using Bastion.Core.Entity;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Bastion.Core.Entity;
+using Bastion.Core.DomainService;
 
 namespace Bastion.Infrastructure.SQLData.Repositories
 {
-    class SpeakerRepository : ISpeakerRepository
+    public class SpeakerRepository : ISpeakerRepository
     {
         private readonly BastionContext _context;
 
+
+        public SpeakerRepository(BastionContext context)
+        {
+            _context = context;
+        }
 
         public Speaker Create(Speaker speaker)
         {

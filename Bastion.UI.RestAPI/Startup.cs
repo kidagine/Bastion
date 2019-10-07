@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Bastion.Core.DomainService;
+using Bastion.Infrastructure.SQLData;
+using Bastion.Core.ApplicationService;
+using Bastion.Core.ApplicationService.Services;
+using Bastion.Infrastructure.SQLData.Repositories;
+
 
 namespace Bastion.UI.RestAPI
 {
@@ -26,6 +27,11 @@ namespace Bastion.UI.RestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<BastionContext>(opt => opt.UseSqlite("Data Source=bastionApp.db"));
+            services.AddScoped<ISpeakerRepository, SpeakerRepository>();
+            services.AddScoped<ISpeakerService, SpeakerService>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +39,22 @@ namespace Bastion.UI.RestAPI
         {
             if (env.IsDevelopment())
             {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    BastionContext context = scope.ServiceProvider.GetService<BastionContext>();
+                    DatabaseInitializer.Seed(context);
+                }
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    BastionContext context = scope.ServiceProvider.GetService<BastionContext>();
+                    DatabaseInitializer.Seed(context);
+                }
+                app.UseDeveloperExceptionPage();
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();

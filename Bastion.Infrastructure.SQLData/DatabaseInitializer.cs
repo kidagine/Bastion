@@ -2,7 +2,7 @@
 
 namespace Bastion.Infrastructure.SQLData
 {
-    class DatabaseInitializer
+    public class DatabaseInitializer
     {
         public static void Seed(BastionContext context)
         {

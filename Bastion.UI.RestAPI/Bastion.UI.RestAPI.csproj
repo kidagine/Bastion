@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bastion.Core.Entity\Bastion.Core.Entity.csproj" />
     <ProjectReference Include="..\Bastion.Core\Bastion.Core.csproj" />
+    <ProjectReference Include="..\Bastion.Infrastructure.SQLData\Bastion.Infrastructure.SQLData.csproj" />
   </ItemGroup>
 
 </Project>
