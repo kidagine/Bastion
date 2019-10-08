@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Bastion.Core.Entity;
 using Bastion.Core.ApplicationService;
+using Bastion.Core.Entity.Filtering;
 
 namespace Bastion.UI.RestAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class SpeakersController : ControllerBase
     {
@@ -20,10 +22,26 @@ namespace Bastion.UI.RestAPI.Controllers
 
         // GET api/speakers -- READ ALL
         [HttpGet]
-        public ActionResult<IEnumerable<Speaker>> Get()
-        {
-            return Ok(_speakerService.ReadAll());
-        }
+        public ActionResult<IEnumerable<Speaker>> Get([FromQuery] Filter filter)
+		{
+			try
+			{
+				CultureInfo ci = new CultureInfo("fr-FR");
+				ci.NumberFormat.CurrencyPositivePattern = 1;
+				List<Speaker> listSpeakers = _speakerService.ReadAll(filter);
+				List<Object> specifiedSpeakers = new List<object>();
+				foreach (Speaker speaker in listSpeakers)
+				{
+					specifiedSpeakers.Add(new { speaker.Id, speaker.Name, price = speaker.Price.ToString("C", ci), speaker.Color });
+				}
+
+				return Ok(specifiedSpeakers);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
         // GET api/speakers.5 -- READ BY ID
         [HttpGet("{id}")]
@@ -32,22 +50,22 @@ namespace Bastion.UI.RestAPI.Controllers
             return _speakerService.ReadById(id);
         }
 
-        // POST api/speakers -- CREATE
-        [HttpPost]
-        public ActionResult Post([FromBody] Speaker speaker)
-        {
-            try
-            {
-                return Ok(_speakerService.Create(speaker));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+		// POST api/speakers -- CREATE
+		[HttpPost]
+		public ActionResult Post([FromBody] Speaker speaker)
+		{
+			try
+			{
+				return Ok(_speakerService.Create(speaker));
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
-        // PUT api/speakers/5 -- UPDATE
-        [HttpPut("{id}")]
+		// PUT api/speakers/5 -- UPDATE
+		[HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Speaker speaker)
         {
             try

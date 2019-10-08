@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Bastion.Core.Entity;
 using Bastion.Core.DomainService;
+using Bastion.Core.Entity.Filtering;
 
 namespace Bastion.Core.ApplicationService.Services
 {
@@ -68,10 +69,14 @@ namespace Bastion.Core.ApplicationService.Services
             return _speakerRepository.ReadById(id);
         }
 
-        public List<Speaker> ReadAll()
-        {
-            return _speakerRepository.ReadAll().ToList();
-        }
-    }
+		public List<Speaker> ReadAll(Filter filter = null)
+		{
+			if (filter.CurrentPage < 0 || filter.ItemsPerPage < 0)
+			{
+				throw new InvalidDataException("Current Page and Items Page have to be zero or more");
+			}
+			return _speakerRepository.ReadAll(filter).ToList();
+		}
+	}
 }
 

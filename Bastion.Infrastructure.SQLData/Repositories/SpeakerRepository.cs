@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Bastion.Core.Entity;
 using Bastion.Core.DomainService;
+using Bastion.Core.Entity.Filtering;
 
 namespace Bastion.Infrastructure.SQLData.Repositories
 {
@@ -43,9 +44,16 @@ namespace Bastion.Infrastructure.SQLData.Repositories
             return _context.Speakers.FirstOrDefault(s => s.Id == id);
         }
 
-        public IEnumerable<Speaker> ReadAll()
-        {
-            return _context.Speakers;
-        }
-    }
+		public IEnumerable<Speaker> ReadAll(Filter filter = null)
+		{
+			if (filter.CurrentPage != 0 && filter.ItemsPerPage != 0)
+			{
+				return _context.Speakers.Skip((filter.CurrentPage - 1) * filter.ItemsPerPage).Take(filter.ItemsPerPage);
+			}
+			else
+			{
+				return _context.Speakers;
+			}
+		}
+	}
 }

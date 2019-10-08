@@ -5,13 +5,13 @@ namespace Bastion.Infrastructure.SQLData
 {
     public class BastionContext : DbContext
     {
-        public BastionContext(DbContextOptions<BastionContext> options) : base(options) { }
+        public BastionContext(DbContextOptions<BastionContext> opt) : base(opt) { }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //}
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+		}
 
-        public DbSet<Speaker> Speakers { get; set; }
-    }
+		public DbSet<Speaker> Speakers { get; set; }
+	}
 }

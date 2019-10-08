@@ -26,18 +26,24 @@ namespace Bastion.UI.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+			services.AddCors();
+			services.AddControllers();
             services.AddDbContext<BastionContext>(opt => opt.UseSqlite("Data Source=bastionApp.db"));
             services.AddScoped<ISpeakerRepository, SpeakerRepository>();
             services.AddScoped<ISpeakerService, SpeakerService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			services.AddMvc().AddJsonOptions(options => {
+				options.JsonSerializerOptions.MaxDepth = 3;
+			});
+
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+			app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod());
+			if (env.IsDevelopment())
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
@@ -55,9 +61,9 @@ namespace Bastion.UI.RestAPI
                 }
                 app.UseDeveloperExceptionPage();
                 app.UseHsts();
-            }
+			}
 
-            app.UseHttpsRedirection();
+			app.UseHttpsRedirection();
 
             app.UseRouting();
 

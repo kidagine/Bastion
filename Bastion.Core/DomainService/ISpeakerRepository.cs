@@ -1,5 +1,6 @@
-﻿using Bastion.Core.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Bastion.Core.Entity;
+using Bastion.Core.Entity.Filtering;
 
 namespace Bastion.Core.DomainService
 {
@@ -9,6 +10,6 @@ namespace Bastion.Core.DomainService
         Speaker Update(Speaker speaker);
         Speaker Delete(int id);
         Speaker ReadById(int id);
-        IEnumerable<Speaker> ReadAll();
+        IEnumerable<Speaker> ReadAll(Filter filter = null);
     }
 }
