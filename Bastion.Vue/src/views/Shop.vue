@@ -16,13 +16,14 @@
       </div>
       <!-- <div id="sort-container">
       </div> -->
-      <main id="products-container">
-        <div id="product-grid">
-          <ul>
-            <li v-for="product in products" v-bind:key="product.d"> {{product.id}} {{product.name}} {{product.price}} </li> 
-          </ul>
-        </div>
-      </main>
+    <ul class="product-list" v-for="product in products" :key="product.id">
+      <div class="product-list-item">
+        <img v-bind:src="product.image" width="360" height="360" >
+        <h1>
+          {{ product.name }} <br> {{ product.price }}
+        </h1>
+      </div>
+    </ul>
     </div>
   </div>
 </template>
@@ -32,10 +33,10 @@ import NavigationBar from '../components/NavigationBar.vue'
 import axios from 'axios';
   export default {
     mounted() {
-      this.fetchProducts()
+      this.fetchProducts();
     },
     data: ()  => ({
-      products: []
+      products: [],
     }),
     components: {
       NavigationBar
@@ -52,6 +53,29 @@ import axios from 'axios';
 </script>
 
 <style>
+
+.product-list {
+  list-style: none;
+  margin: 20px auto;
+  width: 50%;
+}
+
+.product-list-item h1 {
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-weight:500;
+  text-align: center;
+}
+
+.product-list-item img{
+  transition: transform .2s;
+}
+
+.product-list-item img:hover {
+  transform: scale(1.025);
+  cursor:pointer;
+}
+
   #page-heading{
     margin: 0;
     font-weight:700;
@@ -94,7 +118,7 @@ import axios from 'axios';
     height: 3.57143rem;
     line-height: 3.57143rem;
     transition: all .15s ease;
-    font-family: HelveticaNeueW02-75Bold,HelveticaNeueBold,HelveticaNeue-Bold,"Helvetica Neue Bold",HelveticaNeue,"Helvetica Neue",TeXGyreHerosBold,Helvetica,Tahoma,Geneva,Arial,sans-serif;
+    font-family: "Helvetica Neue";
     letter-spacing: .07143rem;
     font-size: .85714rem;
     text-transform: uppercase;

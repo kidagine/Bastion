@@ -3,7 +3,9 @@
   <div id="header">
     <div id="inner_header">
       <div id="logo_container">
-          <router-link  to="/" id="logo">BASTION</router-link>
+        <router-link to = '/'>
+          <div id="logo">BASTION</div>
+        </router-link>
       </div>
       <ul id="navigation">
           <a href="/shop/headphones"><li>HEADPHONES</li></a>
@@ -11,8 +13,10 @@
           <a href="/shop/speakers"><li>SPEAKERS</li></a>
       </ul>
       <ul id="external">
-          <a><li><img src="../../src/assets/logo.png" width="32" height="32" onmouseover="../../src/assets/logo.png'" onmouseout="this.src='../../src/assets/logo.png'"></li></a>
-          <a><li><router-link to="/checkout"><img src='../../src/assets/logo.png' width="32" height="32" onmouseover="this.src='../../src/assets/logo.png'" onmouseout="../../src/assets/logo.png'"></router-link></li></a>
+          <a><li><img src="../../src/assets/search-icon.png" width="26" height="26"></li></a>
+          <router-link to="/checkout">
+          <a><li><img src='../../src/assets/basket.png' width="26" height="26"></li></a>
+          </router-link>
       </ul>
     </div>
   </div>
@@ -46,6 +50,7 @@
   }
 
   #logo{
+    padding-top: 10px;
     box-sizing: border-box;
     vertical-align: middle;
     font-weight: bold;

@@ -32,7 +32,7 @@ namespace Bastion.UI.RestAPI.Controllers
 				List<Object> specifiedSpeakers = new List<object>();
 				foreach (Speaker speaker in listSpeakers)
 				{
-					specifiedSpeakers.Add(new { speaker.Id, speaker.Name, price = speaker.Price.ToString("C", ci), speaker.Color });
+					specifiedSpeakers.Add(new { speaker.Id, speaker.Name, price = speaker.Price.ToString("C", ci), speaker.Image, speaker.Color });
 				}
 
 				return Ok(specifiedSpeakers);

@@ -34,7 +34,7 @@ export default new Router({
       component: Checkout
     },
     {
-      path: "/admin",
+      path: "/admin/",
       name: "admin",
       component: Admin
     },
