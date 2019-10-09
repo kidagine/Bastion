@@ -25,9 +25,7 @@
       <div class="wrapper">
         <ul class="product-list" v-for="product in products" :key="product.id">
           <div class="product-list-item">
-            <router-link to = '/purchase/'>
             <img v-bind:src="product.image" width="460" height="460" >
-            </router-link >
             <h1>
               {{ product.name }} <br> {{ product.price }}
             </h1>
@@ -39,7 +37,7 @@
 </template>
 
 <script>
-import NavigationBar from '../components/NavigationBar.vue'
+import NavigationBar from '../../components/NavigationBar.vue'
 import axios from 'axios';
   export default {
     mounted() {
@@ -53,7 +51,7 @@ import axios from 'axios';
     },
     methods: {
       fetchProducts() {
-        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/')
+        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/?SpeakerType=1')
           .then((data) => {
             this.products = data.data;
           });

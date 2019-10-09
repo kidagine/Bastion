@@ -10,6 +10,9 @@
         {{ product.id }}  {{ product.name }} {{ product.price }}
       </h2>
     </ul> 
+    <h1>
+      {{product.id}}
+    </h1>
   </div>
 </template>
 
@@ -19,26 +22,25 @@ import axios from 'axios';
     mounted() {
     },
     data: ()  => ({
-      products: []
+      products: [],
+      product: ''
     }),
     methods: {
       getAllProducts() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/')
           .then((data) => {
             this.products = data.data;
           });
         },
       getIdProduct() {
-        axios.get('https://jsonplaceholder.typicode.com/posts/1')
+        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/1')
           .then((data) => {
-                        console.log(data.data)
-
-                        this.products = data.data;
-            console.log(data.data);
-          })
-      },
+            this.product = data.data;
+            console.log(product.name);
+          });
+        },
       deleteProduct() {
-      axios.delete('https://jsonplaceholder.typicode.com/users/1')
+      axios.delete('http://bastion-shop.azurewebsites.net/api/speakers/1')
         .then((data) => {
                       console.log(data.data);
 
@@ -47,7 +49,7 @@ import axios from 'axios';
         })
       },
       postProduct() {
-      axios.post('https://jsonplaceholder.typicode.com/users/') 
+      axios.post('http://bastion-shop.azurewebsites.net/api/speakers/') 
       .then((data) => {
                       console.log(data.data);
 

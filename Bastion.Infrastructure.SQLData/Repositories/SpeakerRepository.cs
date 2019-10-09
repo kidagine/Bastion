@@ -46,13 +46,27 @@ namespace Bastion.Infrastructure.SQLData.Repositories
 
 		public IEnumerable<Speaker> ReadAll(Filter filter = null)
 		{
-			if (filter.CurrentPage != 0 && filter.ItemsPerPage != 0)
+			if (filter.SpeakerType == SpeakerType.All)
 			{
-				return _context.Speakers.Skip((filter.CurrentPage - 1) * filter.ItemsPerPage).Take(filter.ItemsPerPage);
+				if (filter.CurrentPage != 0 && filter.ItemsPerPage != 0)
+				{
+					return _context.Speakers.Skip((filter.CurrentPage - 1) * filter.ItemsPerPage).Take(filter.ItemsPerPage);
+				}
+				else
+				{
+					return _context.Speakers;
+				}
 			}
 			else
 			{
-				return _context.Speakers;
+				if (filter.CurrentPage != 0 && filter.ItemsPerPage != 0)
+				{
+					return _context.Speakers.Where(s => s.SpeakerType == filter.SpeakerType).Skip((filter.CurrentPage - 1) * filter.ItemsPerPage).Take(filter.ItemsPerPage);
+				}
+				else
+				{
+					return _context.Speakers.Where(s => s.SpeakerType == filter.SpeakerType);
+				}
 			}
 		}
 	}

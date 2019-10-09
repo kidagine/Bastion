@@ -8,10 +8,9 @@
         </router-link>
       </div>
       <ul id="navigation">
-          <a href="/shop/headphones"><li>HEADPHONES</li></a>
-          <a href="/shop/earbuds"><li>EARBUDS</li></a>
-          <a href="/shop/speakers"><li>SPEAKERS</li></a>
+          <a href="/shop/"><li>SHOP</li></a>
       </ul>
+
       <ul id="external">
           <a><li><img src="../../src/assets/search-icon.png" width="26" height="26"></li></a>
           <router-link to="/checkout">
@@ -20,10 +19,21 @@
       </ul>
     </div>
   </div>
+
 </div>
 </template>
 
 <style>
+input[type=text] {
+  width: 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+  width: 100%;
+}
   /* Header Start */
   #header{
       width: 100% ;

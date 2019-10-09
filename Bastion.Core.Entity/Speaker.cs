@@ -3,8 +3,9 @@
 namespace Bastion.Core.Entity
 {
     public enum ColorType { Red, Green, Blue, };
+	public enum SpeakerType { All, Headphone, Earbud, Speaker };
 
-    public class Speaker
+	public class Speaker
     {
         public int Id { get; set; }
         public string Name { get; set; }
