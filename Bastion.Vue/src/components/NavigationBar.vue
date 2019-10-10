@@ -37,7 +37,7 @@ input[type=text]:focus {
   /* Header Start */
   #header{
       width: 100% ;
-      height: 58px;
+      height: 61px;
       top: 0px;
       display: block;
       background-color: #000;
@@ -64,7 +64,7 @@ input[type=text]:focus {
     box-sizing: border-box;
     vertical-align: middle;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 28px;
     color: white;
   }
 

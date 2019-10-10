@@ -1,30 +1,51 @@
 <template>
   <div>
-    <button id="button" v-on:click="postProduct">Post</button>
-    <button id="button" v-on:click="deleteProduct">Delete</button>
-    <input type="text" v-model="name">
-    <button id="button" v-on:click="getAllProducts">Read All</button>
-    <button id="button" v-on:click="getIdProduct">Read Id</button>
+    <h1>
+      Admin
+    </h1>
+    <div class="crud-container">
+      <div class="post-container">
+            <button id="button">Post</button>
+              <input type="text" placeholder="Name">
+              <input type="text" placeholder="Price">
+      </div>
+      <div class="delete-container">
+            <button id="button" >Delete</button>
+            <input type="text" placeholder="Id to delete">
+      </div>
+      <div class="put-container">
+            <button id="button">Update</button>
+            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Price">
+      </div>
+    </div>
+          <button id="button" v-on:click="getAllProducts">Read All</button>
+        <button id="button" v-on:click="getProduct">Read by id</button>
     <ul class="admin-product-list" v-for="product in products" :key="product.id">
       <h2 class="admin-product-list-item">
         {{ product.id }}  {{ product.name }} {{ product.price }}
       </h2>
     </ul> 
-    <h1>
-      {{product.id}}
-    </h1>
+    <h3>
+      {{ product.id }} {{product.name}} {{product.price}}
+    </h3>
   </div>
 </template>
 
 <script>
+import NavigationBar from '../components/NavigationBar.vue'
 import axios from 'axios';
   export default {
     mounted() {
+      this.deleteProduct();
     },
     data: ()  => ({
       products: [],
       product: ''
     }),
+    components: {
+      NavigationBar
+    },
     methods: {
       getAllProducts() {
         axios.get('http://bastion-shop.azurewebsites.net/api/speakers/')
@@ -32,36 +53,49 @@ import axios from 'axios';
             this.products = data.data;
           });
         },
-      getIdProduct() {
-        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/1')
-          .then((data) => {
-            this.product = data.data;
-            console.log(product.name);
-          });
-        },
+      getProduct() {
+      axios.get('http://bastion-shop.azurewebsites.net/api/speakers/1')
+        .then((data) => {
+          this.product = data.data;
+        });
+      },
       deleteProduct() {
       axios.delete('http://bastion-shop.azurewebsites.net/api/speakers/1')
-        .then((data) => {
-                      console.log(data.data);
-
-                      this.products.pop(data.data);
-          console.log(data.data);
-        })
-      },
-      postProduct() {
-      axios.post('http://bastion-shop.azurewebsites.net/api/speakers/') 
-      .then((data) => {
-                      console.log(data.data);
-
-                      this.products.push(data.data);
-          console.log(data.data);
-      })
+      
       }
     }
   };
 </script>
-
 <style>
+.crud-container{
+  padding-top: 5%;
+    width: 100%;
+    font-size: 12px;
+    overflow: hidden; /* contain floated elements */
+    background: #ccc
+}
+.post-container{
+  background-color: red;
+    float: left; 
+    width: 33.3%;
+    padding-right: 1%;
+    padding-left: 1%;}
+.delete-container{
+    background-color: red;
+    float: left; 
+    width: 33.3%;
+    padding-right: 1%;
+    padding-left: 1%;
+}
+.put-container{
+    background-color: red;
+    float: left; 
+    width: 33.3%;
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+
 .admin-product-list {
   list-style: none;
   margin: 20px auto;

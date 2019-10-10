@@ -11,6 +11,7 @@ namespace Bastion.Core.Entity
         public string Name { get; set; }
         public double Price { get; set; }
 		public string Image { get; set; }
+		public string Background { get; set; }
 		public ColorType Color { get; set; }
 		public SpeakerType SpeakerType { get; set; }
 	}

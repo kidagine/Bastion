@@ -41,12 +41,12 @@ export default new Router({
       component: ShopSpeakers
     },
     {
-      path: '/purchase/',
+      path: '/purchase/:id',
       name: 'purchase',
       component: Purchase
     },
     {
-      path: '/checkout/',
+      path: '/checkout/:id',
       name: 'checkout',
       component: Checkout
     },

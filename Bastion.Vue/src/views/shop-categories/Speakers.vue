@@ -25,7 +25,9 @@
       <div class="wrapper">
         <ul class="product-list" v-for="product in products" :key="product.id">
           <div class="product-list-item">
+            <router-link :to="`/purchase/${product.id}`">
             <img v-bind:src="product.image" width="460" height="460" >
+            </router-link>
             <h1>
               {{ product.name }} <br> {{ product.price }}
             </h1>

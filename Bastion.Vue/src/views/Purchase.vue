@@ -1,16 +1,19 @@
 <template>
   <div>
     <NavigationBar/>
+
     <header class="overview container">
         <div class="fullscreen-video-wrap">
-          <img src="https://cdn11.bigcommerce.com/s-fa8ae9fe8j/content/pdp_images/4370_9723.jpg" >
+          <img v-bind:src="product.background" >
         </div>
         <div class="header-content text-md-center">
             <h1>DEEPER DIMENSIONS OF SOUND.</h1>
-            <p class="name">Crusher ANC™<br> Personalized,<br>Noise Canceling <br>Wireless Headphones</p>
-            <p class="price">299.99€</p>
+            <p class="name">{{product.name}}</p>
+            <p class="price">{{product.price}}€</p>
             <div class="button-container">
+              <router-link :to="`/checkout/${product.id}`">
               <a id="button">Purchase</a>
+              </router-link>
             </div>
         </div>
     </header>
@@ -19,12 +22,27 @@
 </template>
 
 <script>
+import axios from 'axios';
 import NavigationBar from '../components/NavigationBar.vue'
 import Footer from '../components/Footer.vue'
   export default {
+    mounted() {
+      this.fetchProducts(this.$route.params.id);
+    },
+    data: ()  => ({
+      product: ''
+    }),
     components: {
       NavigationBar,
       Footer
+    },
+    methods: {
+    fetchProducts(id) {
+      axios.get('http://bastion-shop.azurewebsites.net/api/speakers/' + id)
+        .then((data) => {
+          this.product = data.data;
+        });
+      }
     }
   };
 </script>
@@ -88,11 +106,15 @@ import Footer from '../components/Footer.vue'
   line-height: 85%;
   font-weight: bold;
   font-size: 20px;
+  padding-bottom: 10px;
   margin-bottom:20px;
+  border-bottom: 2px solid #fff;
+
 }
 .button-container{
     width: 200px;
     height: 500px;
+
 }
 /* Overview End */
 </style>

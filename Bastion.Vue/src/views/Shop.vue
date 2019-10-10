@@ -25,7 +25,7 @@
       <div class="wrapper">
         <ul class="product-list" v-for="product in products" :key="product.id">
           <div class="product-list-item">
-            <router-link to = '/purchase/'>
+            <router-link :to="`/purchase/${product.id}`">
             <img v-bind:src="product.image" width="460" height="460" >
             </router-link >
             <h1>
@@ -35,6 +35,11 @@
         </ul>
       </div>
     </div>
+            <div id="paging-container">
+          <router-link to = '/shop/CurrentPage=2&ItemsPerPage=12'>
+          <a id="paging-button">Next</a>
+          </router-link>
+        </div>
   </div>
 </template>
 
@@ -47,6 +52,7 @@ import axios from 'axios';
     },
     data: ()  => ({
       products: [],
+      id: 1
     }),
     components: {
       NavigationBar
@@ -100,11 +106,53 @@ import axios from 'axios';
 
   #page-heading{
     margin: 0;
-    font-weight:700;
+    font-weight:900;
     font-size: 50px;;   
     text-align: center;
     font-family:'Montserrat';
     padding: 60px;
+  }
+    #paging-container{
+    max-width: 260px;
+    padding-left: 60px;
+    padding-right: 60px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+  }
+    #paging-button{
+    position: relative;
+    overflow: hidden;
+    height: 3.57143rem;
+    line-height: 3.57143rem;
+    transition: all .15s ease;
+    font-family: "Helvetica Neue";
+    letter-spacing: .07143rem;
+    font-size: .85714rem;
+    text-transform: uppercase;
+    padding: 0 2.85714rem;
+    border: 0;
+    white-space: nowrap;
+    text-align: center;
+    background: 0 0;
+    color: #fff;
+    background: #2c2c2c;
+    z-index: 9;
+    width: 100%;
+    display: block;
+     -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+  }
+  #paging-button:hover{
+    background-color: black;
+    cursor: pointer;    
+  }
+    #main-container .button{
+      background: #000
   }
   #main-container{
     max-width: 1560px;
