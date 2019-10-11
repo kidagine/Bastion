@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Bastion.Core.Entity;
 using Bastion.Core.ApplicationService;
 using Bastion.Core.Entity.Filtering;
+using Microsoft.AspNetCore.Cors;
 
 namespace Bastion.UI.RestAPI.Controllers
 {
+	[EnableCors("CorsPolicy")]
 	[Route("api/[controller]")]
     [ApiController]
     public class SpeakersController : ControllerBase
