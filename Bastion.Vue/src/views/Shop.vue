@@ -22,7 +22,7 @@
       </div>
       <!-- <div id="sort-container">
       </div> -->
-      <div class="wrapper">
+      <div class="wrapper-product">
         <ul class="product-list" v-for="product in products" :key="product.id">
           <div class="product-list-item">
             <router-link :to="`/purchase/${product.id}`">
@@ -34,34 +34,50 @@
           </div>
         </ul>
       </div>
+      
     </div>
-            <div id="paging-container">
-          <router-link to = '/shop/CurrentPage=2&ItemsPerPage=12'>
-          <a id="paging-button">Next</a>
-          </router-link>
-        </div>
+      <div id="paging-container">
+    <button v-on:click="fetchProducts(currentPage)">
+    <a id="paging-button">{{pagingButtonText}}</a>
+    </button>
+  </div>
+
   </div>
 </template>
 
 <script>
 import NavigationBar from '../components/NavigationBar.vue'
+import Footer from '../components/Footer.vue'
 import axios from 'axios';
   export default {
     mounted() {
-      this.fetchProducts();
+
+      this.fetchProducts(1);
     },
     data: ()  => ({
       products: [],
-      id: 1
+      currentPage: 1,
+      id: 1,
+      pagingButtonText: 'Next'
     }),
     components: {
-      NavigationBar
+      NavigationBar,
+      Footer
     },
     methods: {
-      fetchProducts() {
-        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/')
+      fetchProducts(id) {
+        axios.get(`http://bastion-shop.azurewebsites.net/api/speakers/?CurrentPage=${id}&ItemsPerPage=12`)
           .then((data) => {
             this.products = data.data;
+            if (this.currentPage == 1)
+            {
+            this.currentPage = 2;
+            this.pagingButtonText = "Next";
+            }
+            else{
+            this.currentPage = 1;
+            this.pagingButtonText = "Back";
+            }
           });
         }
     }
@@ -69,16 +85,12 @@ import axios from 'axios';
 </script>
 
 <style>
-.wrapper {
+.wrapper-product {
   display: grid;
   grid-template-columns: 470px 470px 470px;
   grid-gap: 20px;
-  margin-bottom:100px;
 }
 
-.box {
-  font-size: 150%;
-}
 .product-list {
   list-style: none;
   display: flex;
@@ -124,11 +136,11 @@ import axios from 'axios';
     #paging-button{
     position: relative;
     overflow: hidden;
+    margin-bottom: 30%;
     height: 3.57143rem;
     line-height: 3.57143rem;
     transition: all .15s ease;
     font-family: "Helvetica Neue";
-    letter-spacing: .07143rem;
     font-size: .85714rem;
     text-transform: uppercase;
     padding: 0 2.85714rem;
@@ -166,7 +178,7 @@ import axios from 'axios';
     max-width: none;
     margin-left: -.71429rem;
     margin-right: -.71429rem;
-    margin-bottom: 10%; 
+    margin-bottom: 50%; 
     width: auto;
     display: -webkit-box;
     flex-grow: 1;

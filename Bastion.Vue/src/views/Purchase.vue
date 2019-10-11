@@ -2,8 +2,8 @@
   <div>
     <NavigationBar/>
 
-    <header class="overview container">
-        <div class="fullscreen-video-wrap">
+    <header class="purchase-container">
+        <div class="fullscreen-image-pur-wrap">
           <img v-bind:src="product.background" >
         </div>
         <div class="header-content text-md-center">
@@ -23,8 +23,8 @@
 
 <script>
 import axios from 'axios';
-import NavigationBar from '../components/NavigationBar.vue'
 import Footer from '../components/Footer.vue'
+import NavigationBar from '../components/NavigationBar.vue'
   export default {
     mounted() {
       this.fetchProducts(this.$route.params.id);
@@ -35,7 +35,7 @@ import Footer from '../components/Footer.vue'
     components: {
       NavigationBar,
       Footer
-    },
+      },
     methods: {
     fetchProducts(id) {
       axios.get('http://bastion-shop.azurewebsites.net/api/speakers/' + id)
@@ -49,14 +49,11 @@ import Footer from '../components/Footer.vue'
 
 <style>
 /* Overview Start */
-.overview{
+.purchase-container{
     height:100vh;
     display:flex;
     align-items:center;
     color:#fff;
-}
-
-.container{
     max-width:1470px;
     padding-left:1rem;
     padding-right:55rem;
@@ -64,7 +61,7 @@ import Footer from '../components/Footer.vue'
     text-align:center;
 }
   
-.fullscreen-video-wrap{
+.fullscreen-image-pur-wrap{
     position:absolute;
     top:0;
     left:0;
@@ -73,7 +70,7 @@ import Footer from '../components/Footer.vue'
     overflow:hidden;
 }
   
-.fullscreen-video-wrap img{
+.fullscreen-image-pur-wrap img{
     min-height:100%;
     min-width:100%;
 }

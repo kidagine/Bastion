@@ -41,9 +41,9 @@
               <div class="order-text">
                 <p>
                   By Selecting [Order & Pay], you request <br>
-                  immediate access to your purchase with the <br>
-                  understanding that you will not have a <br>
-                  "cooling off period" during which you can <br>
+                  immediate access to your purchase with the 
+                  understanding that you will not have a 
+                  "cooling off period" during which you can 
                   cancel your purchase.
                 </p>
               </div>
@@ -59,7 +59,6 @@
 <script>
 import axios from 'axios';
 import NavigationBar from '../components/NavigationBar.vue'
-import Footer from '../components/Footer.vue'
   export default {
     mounted() {
       this.fetchProducts(this.$route.params.id);

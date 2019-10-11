@@ -1,71 +1,64 @@
 <template>
-  <div>
-    <h1>
-      Admin
-    </h1>
-    <div class="crud-container">
-      <div class="post-container">
-            <button id="button">Post</button>
-              <input type="text" placeholder="Name">
-              <input type="text" placeholder="Price">
-      </div>
-      <div class="delete-container">
-            <button id="button" >Delete</button>
-            <input type="text" placeholder="Id to delete">
-      </div>
-      <div class="put-container">
-            <button id="button">Update</button>
-            <input type="text" placeholder="Name">
-            <input type="text" placeholder="Price">
-      </div>
-    </div>
-          <button id="button" v-on:click="getAllProducts">Read All</button>
-        <button id="button" v-on:click="getProduct">Read by id</button>
-    <ul class="admin-product-list" v-for="product in products" :key="product.id">
-      <h2 class="admin-product-list-item">
-        {{ product.id }}  {{ product.name }} {{ product.price }}
-      </h2>
-    </ul> 
-    <h3>
-      {{ product.id }} {{product.name}} {{product.price}}
-    </h3>
+  <div id="app">
+    <ul>
+      <li v-for="context in contexts" v-bind:key="context.id">{{context}}</li>
+    </ul>
+    <button v-on:click="loadContext()">Load</button>
+    <input v-model="del">
+    <button v-on:click="deleteContext()">Delete</button>
+    <button v-on:click="addContext()">Add</button>
+    <button v-on:click="editContext()">Edit</button>
   </div>
 </template>
 
 <script>
-import NavigationBar from '../components/NavigationBar.vue'
-import axios from 'axios';
-  export default {
-    mounted() {
-      this.deleteProduct();
-    },
-    data: ()  => ({
-      products: [],
-      product: ''
-    }),
-    components: {
-      NavigationBar
-    },
-    methods: {
-      getAllProducts() {
-        axios.get('http://bastion-shop.azurewebsites.net/api/speakers/')
-          .then((data) => {
-            this.products = data.data;
-          });
-        },
-      getProduct() {
-      axios.get('http://bastion-shop.azurewebsites.net/api/speakers/1')
-        .then((data) => {
-          this.product = data.data;
-        });
+import axios from 'axios'
+export default {
+  name: 'app',
+  //mounted() {
+  //  this.loadContent()
+  //},
+  data: () => {
+    return {
+      del: "",
+      contexts: [],
+      rubberDuck: {
+        "id": 16,
+        "duckColor": { "id": 1, "name": "Yellow" },
+        "duckPattern": { "id": 1, "name": "Spotted" },
+        "duckSize": 3,
+        "price": 678,
+        "duckGender": 1,
+        "duckCostume": { "id": 1, "name": "Navy" }
       },
-      deleteProduct() {
-      axios.delete('http://bastion-shop.azurewebsites.net/api/speakers/1')
-      
+      editRubberDuck: {
+        "id": 16,
+        "duckColor": { "id": 1, "name": "Yellow" },
+        "duckPattern": { "id": 1, "name": "Spotted" },
+        "duckSize": 3,
+        "price": 100,
+        "duckGender": 1,
+        "duckCostume": { "id": 1, "name": "Navy" }
       }
     }
-  };
+  },
+  methods: {
+    loadContext: function() {
+      axios.get('http://bastion-shop.azurewebsites.net/api/speakers/').then(response => (this.contexts = response.data))
+    },
+    deleteContext: function() {
+      axios.delete('http://bastion-shop.azurewebsites.net/api/speakers/' + this.del)
+    },
+    addContext: function () {
+      axios.post('http://bastion-shop.azurewebsites.net/api/speakers/', this.rubberDuck)
+    },
+    editContext: function () {
+      axios.put('https://rubberduckshop.azurewebsites.net/api/duck/16', this.editRubberDuck)
+    }
+  }
+}
 </script>
+
 <style>
 .crud-container{
   padding-top: 5%;

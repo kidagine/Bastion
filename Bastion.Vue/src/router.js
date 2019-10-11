@@ -55,5 +55,8 @@ export default new Router({
       name: "admin",
       component: Admin
     },
-  ]
+  ],
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }
 })
