@@ -6,9 +6,6 @@ namespace Bastion.Infrastructure.SQLData
     {
         public static void Seed(BastionContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-
 			Speaker speakerHeadphone1 = context.Speakers.Add(new Speaker() { Name = "Crusher ANC Personalized Noise Canceling Wireless Headphones", Price = 299.99, Image = "https://i.imgur.com/pZaDNSe.jpg", Background = "https://i.imgur.com/q8ynDC1.jpg", SpeakerType = SpeakerType.Headphone, Color = ColorType.Red }).Entity;
 			Speaker speakerHeadphone2 = context.Speakers.Add(new Speaker() { Name = "Crusher 360 Ultra-Realistic Audio", Price = 299.99, Image = "https://i.imgur.com/9yeVtwE.jpg", Background = "https://i.imgur.com/hVKzg4N.jpg", SpeakerType = SpeakerType.Headphone, Color = ColorType.Blue }).Entity;
 			Speaker speakerHeadphone3 = context.Speakers.Add(new Speaker() { Name = "Venue Noise Canceling Wireless Headphone", Price = 179.99, Image = "https://i.imgur.com/pXcsT5g.jpg", Background = "https://i.imgur.com/axo4ofJ.jpg", SpeakerType = SpeakerType.Headphone, Color = ColorType.Green }).Entity;
